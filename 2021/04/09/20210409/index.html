@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Simjae&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Simjae&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Simjae&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="분류 mnist 데이터를 활용  1.1 이진 분류기 훈련  sgdclassifier클래스 사용한 ‘확률적경사 하강법(SGD)’ 분류기       ㄴ 장점 : 큰 데이터 셋을 효율적으로 처리   sgdclassifier는 무작위성을 사용(이미지가 5인지 확인)  2.1 성능측정   ㅁ ‘교차 검증’을 사용한 정확도 측정  cross_val_score() 함수"><meta property="og:type" content="blog"><meta property="og:title" content="Simjae&#039;s blog"><meta property="og:url" content="https://jo0313.github.io/2021/04/09/20210409/"><meta property="og:site_name" content="Simjae&#039;s blog"><meta property="og:description" content="분류 mnist 데이터를 활용  1.1 이진 분류기 훈련  sgdclassifier클래스 사용한 ‘확률적경사 하강법(SGD)’ 분류기       ㄴ 장점 : 큰 데이터 셋을 효율적으로 처리   sgdclassifier는 무작위성을 사용(이미지가 5인지 확인)  2.1 성능측정   ㅁ ‘교차 검증’을 사용한 정확도 측정  cross_val_score() 함수"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://jo0313.github.io/img/og_image.png"><meta property="article:published_time" content="2021-04-09T02:53:02.803Z"><meta property="article:modified_time" content="2021-04-09T07:21:05.703Z"><meta property="article:author" content="Sim Jae"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://jo0313.github.io/2021/04/09/20210409/"},"headline":"Simjae's blog","image":["https://jo0313.github.io/img/og_image.png"],"datePublished":"2021-04-09T02:53:02.803Z","dateModified":"2021-04-09T07:21:05.703Z","author":{"@type":"Person","name":"Sim Jae"},"description":"분류 mnist 데이터를 활용  1.1 이진 분류기 훈련  sgdclassifier클래스 사용한 ‘확률적경사 하강법(SGD)’ 분류기       ㄴ 장점 : 큰 데이터 셋을 효율적으로 처리   sgdclassifier는 무작위성을 사용(이미지가 5인지 확인)  2.1 성능측정   ㅁ ‘교차 검증’을 사용한 정확도 측정  cross_val_score() 함수"}</script><link rel="canonical" href="https://jo0313.github.io/2021/04/09/20210409/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-09T02:53:02.803Z" title="2021. 4. 9. 오전 11:53:02">2021-04-09</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-09T07:21:05.703Z" title="2021. 4. 9. 오후 4:21:05">2021-04-09</time></span><span class="level-item">8 minutes read (About 1207 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"> </h1><div class="content"><h1>분류</h1>
+mnist 데이터를 활용
+
+<p>1.1 이진 분류기 훈련</p>
+<ul>
+<li>sgdclassifier클래스 사용한 ‘확률적경사 하강법(SGD)’ 분류기  <pre><code>     ㄴ 장점 : 큰 데이터 셋을 효율적으로 처리
+</code></pre>
+</li>
+<li>sgdclassifier는 무작위성을 사용(이미지가 5인지 확인)</li>
+</ul>
+<p>2.1 성능측정  </p>
+<p>ㅁ ‘교차 검증’을 사용한 정확도 측정</p>
+<ul>
+<li>cross_val_score() 함수로 폴드가 3개인 ik-겹 교차 검증을 사용해 sgdclassifier모델 평가 시작</li>
+<li>array값이 0.95 이상(95%이상)</li>
+<li>더미 분류기 만들어서 확인</li>
+<li>이 예제는 정확도를 분류기의성능 측정 지표로 선호하지 않는 이유를 보여줌, 어떤 클래스가 다른것보다 월등히 많은 경우 더욱 그렇다</li>
+</ul>
+<p>ㅁ 오차행렬</p>
+<ul>
+<li>분류기의 성능을 평가하는 더 좋은 방법은 오차 행렬을 조사하는 것이다</li>
+<li>오차 행렬을 만들려면 실제 타깃과 비교할 수 있도록 예측값을 만들어야 한다.</li>
+<li>cross_val_predit() 함수를 쓰는데 평가 점수를 반환하지 않고 각 테스트 폴드에서 얻은 예측을 반환</li>
+<li>confusion_matrix()함수를 사용해 타깃클래스, 예측클래스를 넣어 오차 행렬 만들기</li>
+<li>행 : 실제 클래스 /  열 : 예측한 클래스</li>
+<li>정밀도 = TP/TP+FP ( TP : 양성의 수, FP : 거짓 양성의 수) , 정밀도는 재현율과 같이 사용하는 것이 좋다.</li>
+<li>재현율 = TP/TP+FN </li>
+</ul>
+<p>ㅁ 정밀도와 재현율</p>
+<ul>
+<li>정밀도와 재현율을 F1점수라고 하는 하나의 숫자로 만들면 편리함</li>
+<li>F1점수는 정밀도와 재현율의 조화 평균</li>
+<li>F1점수를 구하려면 f1_score() 함수 호출</li>
+<li>상황에 따라 정밀도가 중요할 수가 있고 재현율이 중요할 수 있음 (어린아이 유해사이트 지정)</li>
+</ul>
+<p>ㅁ 정밀도/재현율 트레이드오프</p>
+<ul>
+<li>(임계값을 올리면) 정밀도가 올라가면 재현율이 줄어들고 (임곗값을 내리면)재현율이 올라가면 정밀도가 떨어진다</li>
+<li>predict() 대신 decision_function()을 사용해 데이터 가져옴 , 이 점수 기반으로 임곗값을 정해 예측을 만들수 있다.</li>
+<li>적절한 임곗값을 정하기 위해 cross_val_predit()을 사용해 모든 샘플의 점수 구하고 예측 결과가 아닌 결정 점수를 반환하도록 지정</li>
+<li>precision_recall_curve()를 사용해 모든 임계값에 대해 정밀도와 재현율을 계산할 수 있다</li>
+<li>맷플롯립을 이용해 임계값의 함수로 정밀도와 재현율을 그림</li>
+</ul>
+<p>ㅁ ROC 곡선</p>
+<ul>
+<li>이진 분류에서 널리 사용하는 도구</li>
+<li>정밀도/재현율 곡선과 매우 비슷하지만, roc 곡선은 정밀도에 대한 재현율 곡선이 아니고 거짓 양성비율에대한 진짜 양성비율의 곡선</li>
+<li>roc_curve()함수 사용해서 임계값에서 TPR과 FPR을 계산</li>
+<li>좋은 분류기는 점선에서 멀리 떨어져 있어야한다.</li>
+<li>곡선아래면적(AUC)를 측정하면 분류기들을 비교 가능</li>
+<li>양성 클래스가 드물거나 거짓 음성보다 거짓양성이 더 중요할때 PR곡선을 사용하고 그렇지 않으면 ROC곡선을 사용</li>
+</ul>
+<p> ※ 용어</p>
+<pre><code>거짓 양성비율 : FPR
+
+진짜 양성비율 : TPR
+
+진짜 음성비율 : TNR (true negative rate)
+
+특이도 : TNR (specificity)
+                
+</code></pre>
+<ol start="3">
+<li>다중분류</li>
+</ol>
+<ul>
+<li>둘 이상의 클래스를 구별 가능</li>
+<li>ovo 주요 장점은 각 분류기의 훈련에 전체 훈련세트 중 구별할 두 클래스에 해당하는 샘플만 필요</li>
+<li>일부 알고리즘은 큰 훈련 세트에서 몇개의 분류기를 훈련시키는것보다 작은 훈련세트에서 많은 분류기를 훈련시키는 쪽이 빠르므로 ovo를 선호</li>
+<li>대부분의 이진 분류 알고리즘에서는 ovr을 선호</li>
+<li>다중 클래스 분류 작업에 이진분류 알고리즘을 선택하면 사이킷런이 알고리즘에 따라 자동으로 ovo, ovr을 실행</li>
+<li>사이킷런에서 ovo나 ovr을 사용하도록 강제하려면 OneVsOneClassifier나 OneVsRestClassifier를 사용 –&gt; 이진 분류기 인스턴스를 만들어 객체를 생성 할 때 전달하면 된다.</li>
+<li>decision_function 메소드는 클래스마다 하나의 값을 반환</li>
+<li>cross_val_score()을 사용해 SGDClassifier의 정확도 평가</li>
+</ul>
+<p> ※ 용어</p>
+<pre><code>Ova,OvR 전략 : 이미지를 분류 할 때 각 분류기의 결정 점수 중에서 가장 높은 것을 클래스로 선택
+OvO 전략 : 1,2 1,3과 같이 각각의 숫자의 조합마다 이진 분류기를 훈련시키는 것
+</code></pre>
+<ol start="4">
+<li>에러분석</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p><a href="https://jo0313.github.io/2021/04/09/20210409/">https://jo0313.github.io/2021/04/09/20210409/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Sim Jae</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-04-09</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2021-04-09</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>Afdian.net</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/" alt="Alipay"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>Buy me a coffee</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/04/09/20210324/"><span class="level-item"> </span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="조심재"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">조심재</p><p class="is-size-6 is-block">심재 블로그</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>대한민국</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">4</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-09T02:53:02.803Z">2021-04-09</time></p><p class="title"><a href="/2021/04/09/20210409/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-09T00:38:35.998Z">2021-04-09</time></p><p class="title"><a href="/2021/04/09/20210324/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-08T08:10:32.000Z">2021-04-08</time></p><p class="title"><a href="/2021/04/08/20210408-md/">20210408.md</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-07T08:10:09.773Z">2021-04-07</time></p><p class="title"><a href="/2021/04/07/Untitled0/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-06T07:58:40.406Z">2021-04-06</time></p><p class="title"><a href="/2021/04/06/Logistic-regression2/"> </a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">April 2021</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">March 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/R/"><span class="tag">R</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/c/"><span class="tag">c++</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2021 Sim Jae</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
