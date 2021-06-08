@@ -1,5 +1,672 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Simjae&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Simjae&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Simjae&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Simjae&#039;s blog"><meta property="og:url" content="https://jo0313.github.io/"><meta property="og:site_name" content="Simjae&#039;s blog"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://jo0313.github.io/img/og_image.png"><meta property="article:author" content="Sim Jae"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://Jo0313.github.io"},"headline":"Simjae's blog","image":["https://jo0313.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Sim Jae"},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-06T07:58:40.406Z" title="2021. 4. 6. 오후 4:58:40">2021-04-06</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-06T07:55:21.490Z" title="2021. 4. 6. 오후 4:55:21">2021-04-06</time></span><span class="level-item">16 minutes read (About 2380 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/06/Logistic-regression2/"> </a></h1><div class="content"><!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Simjae&#039;s blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Simjae&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Simjae&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Simjae&#039;s blog"><meta property="og:url" content="https://jo0313.github.io/"><meta property="og:site_name" content="Simjae&#039;s blog"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://jo0313.github.io/img/og_image.png"><meta property="article:author" content="Sim Jae"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://Jo0313.github.io"},"headline":"Simjae's blog","image":["https://jo0313.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Sim Jae"},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-09T00:38:35.998Z" title="2021. 4. 9. 오전 9:38:35">2021-04-09</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-09T00:55:28.381Z" title="2021. 4. 9. 오전 9:55:28">2021-04-09</time></span><span class="level-item">a minute read (About 163 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/09/20210324/"> </a></h1><div class="content"><h1>텍스트 마이닝</h1>
+형태
+- 수치형
+- 이진형(y/n)
+- 범주형
+- 텍스트
+
+<ul>
+<li>텍스트 마이닝?</li>
+</ul>
+<p> ㅁ 비정형화된 데이터 처리, 정형화하는 방법<br> ㅁ 블로그, 온라인 포럼, 리뷰사이트, 뉴스기사 , 트위터</p>
+<ul>
+<li>활용사례<ul>
+<li>뉴스를 주제별로 정리</li>
+</ul>
+</li>
+</ul>
+<p>용어정리</p>
+<ul>
+<li>말뭉치 : 관련된 문서들의 집합</li>
+<li>문서 행렬 : 문서와 문서에 있는 단어를 행렬로 정리</li>
+<li>파싱/토큰화 : 텍스트의 단어, 절을 분리하는 작업</li>
+<li>용어(token) : 단어의 어간을 추출하는 과정</li>
+<li>불용어 : 의미 없는 단어(the,and,of등)</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-08T08:10:32.000Z" title="2021. 4. 8. 오후 5:10:32">2021-04-08</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-08T08:20:11.042Z" title="2021. 4. 8. 오후 5:20:11">2021-04-08</time></span><span class="level-item">a few seconds read (About 13 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/08/20210408-md/">20210408.md</a></h1><div class="content"><p><img src="https://user-images.githubusercontent.com/80385376/113992650-a242d900-988e-11eb-9896-875f29aeff95.png" alt="img_3"></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-07T08:10:09.773Z" title="2021. 4. 7. 오후 5:10:09">2021-04-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-07T08:09:36.000Z" title="2021. 4. 7. 오후 5:09:36">2021-04-07</time></span><span class="level-item">9 minutes read (About 1327 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/07/Untitled0/"> </a></h1><div class="content"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> (MultipleLocator, AutoMinorLocator, FuncFormatter)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">major_formatter</span>(<span class="params">x, pos</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&#123;%.2f&#125;&quot;</span> % x</span><br><span class="line">formatter = FuncFormatter(major_formatter)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="built_in">print</span>(np.__version__)</span><br></pre></td></tr></table></figure>
+
+<pre><code>1.19.5
+</code></pre>
+<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>넘파이 shape는<br>1개 (갯수,)</p>
+<p>2개 이상 (행갯수,갯수)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">8</span>],[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]</span><br><span class="line">data1</span><br><span class="line">data2 =[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">data2</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>[1, 2, 3, 4, 5, 6]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array1 = np.array(data1)</span><br><span class="line"><span class="built_in">print</span>(array1)</span><br><span class="line"><span class="built_in">print</span>(array1.shape)</span><br><span class="line"></span><br><span class="line">array2 = np.array(data2)</span><br><span class="line"><span class="built_in">print</span>(array2.shape)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[1 2 8]
+ [3 4 5]
+ [6 7 8]]
+(3, 3)
+(6,)
+</code></pre>
+<h3 id="기본함수들"><a href="#기본함수들" class="headerlink" title="기본함수들"></a>기본함수들</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">array = np.arange(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">array</span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>array([1, 2, 3, 4, 5, 6, 7])
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zero = np.zeros((<span class="number">3</span>,<span class="number">5</span>))</span><br><span class="line"><span class="built_in">print</span>(zero)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0.]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">one = np.ones((<span class="number">5</span>,<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(one)</span><br></pre></td></tr></table></figure>
+
+<pre><code>[[1. 1.]
+ [1. 1.]
+ [1. 1.]
+ [1. 1.]
+ [1. 1.]]
+</code></pre>
+<p>#Pandas (영상, 이미지 등 비정형 데이터에서 주로 쓴다)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="built_in">print</span>(pd.__version__)</span><br></pre></td></tr></table></figure>
+
+<pre><code>1.1.5
+</code></pre>
+<p>##구글 드라이브 연동</p>
+<ul>
+<li>마운트하기</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> google.colab <span class="keyword">import</span> drive</span><br><span class="line">drive.mount(<span class="string">&#x27;/content/drive&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>Mounted at /content/drive
+</code></pre>
+<p>#데이터 처리</p>
+<ul>
+<li>데이터 불러오기 &amp; 조회</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lemonade = pd.read_csv(<span class="string">&#x27;/content/drive/MyDrive/Colab Notebooks/kaggle2portpolio/data/Lemonade2016.csv&#x27;</span>)</span><br><span class="line">lemonade.info()</span><br><span class="line">lemonade.head(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 32 entries, 0 to 31
+Data columns (total 7 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   Date         31 non-null     object 
+ 1   Location     32 non-null     object 
+ 2   Lemon        32 non-null     int64  
+ 3   Orange       32 non-null     int64  
+ 4   Temperature  32 non-null     int64  
+ 5   Leaflets     31 non-null     float64
+ 6   Price        32 non-null     float64
+dtypes: float64(2), int64(3), object(2)
+memory usage: 1.9+ KB
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Lemon</th>
+      <th>Orange</th>
+      <th>Temperature</th>
+      <th>Leaflets</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7/1/2016</td>
+      <td>Park</td>
+      <td>97</td>
+      <td>67</td>
+      <td>70</td>
+      <td>90.0</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7/2/2016</td>
+      <td>Park</td>
+      <td>98</td>
+      <td>67</td>
+      <td>72</td>
+      <td>90.0</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7/3/2016</td>
+      <td>Park</td>
+      <td>110</td>
+      <td>77</td>
+      <td>71</td>
+      <td>104.0</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7/4/2016</td>
+      <td>Beach</td>
+      <td>134</td>
+      <td>99</td>
+      <td>76</td>
+      <td>98.0</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7/5/2016</td>
+      <td>Beach</td>
+      <td>159</td>
+      <td>118</td>
+      <td>78</td>
+      <td>135.0</td>
+      <td>0.25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<ul>
+<li>요약</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lemonade.describe()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Lemon</th>
+      <th>Orange</th>
+      <th>Temperature</th>
+      <th>Leaflets</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>32.000000</td>
+      <td>31.000000</td>
+      <td>32.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>116.156250</td>
+      <td>80.000000</td>
+      <td>78.968750</td>
+      <td>108.548387</td>
+      <td>0.354687</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>25.823357</td>
+      <td>21.863211</td>
+      <td>4.067847</td>
+      <td>20.117718</td>
+      <td>0.113137</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>71.000000</td>
+      <td>42.000000</td>
+      <td>70.000000</td>
+      <td>68.000000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>98.000000</td>
+      <td>66.750000</td>
+      <td>77.000000</td>
+      <td>90.000000</td>
+      <td>0.250000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>113.500000</td>
+      <td>76.500000</td>
+      <td>80.500000</td>
+      <td>108.000000</td>
+      <td>0.350000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>131.750000</td>
+      <td>95.000000</td>
+      <td>82.000000</td>
+      <td>124.000000</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>176.000000</td>
+      <td>129.000000</td>
+      <td>84.000000</td>
+      <td>158.000000</td>
+      <td>0.500000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<ul>
+<li>값 가져오기</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lemonade[<span class="string">&#x27;Location&#x27;</span>] <span class="comment"># 내용보기</span></span><br><span class="line"></span><br><span class="line">lemonade[<span class="string">&#x27;Location&#x27;</span>].value_counts() <span class="comment"># 카운트</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<pre><code>Beach    17
+Park     15
+Name: Location, dtype: int64
+</code></pre>
+<ul>
+<li>값 수정</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lemonade[<span class="string">&#x27;Price&#x27;</span>] = lemonade[<span class="string">&#x27;Lemon&#x27;</span>] + lemonade[<span class="string">&#x27;Orange&#x27;</span>]</span><br><span class="line">lemonade.head(<span class="number">5</span>)  </span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Lemon</th>
+      <th>Orange</th>
+      <th>Temperature</th>
+      <th>Leaflets</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7/1/2016</td>
+      <td>Park</td>
+      <td>97</td>
+      <td>67</td>
+      <td>70</td>
+      <td>90.0</td>
+      <td>164</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7/2/2016</td>
+      <td>Park</td>
+      <td>98</td>
+      <td>67</td>
+      <td>72</td>
+      <td>90.0</td>
+      <td>165</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7/3/2016</td>
+      <td>Park</td>
+      <td>110</td>
+      <td>77</td>
+      <td>71</td>
+      <td>104.0</td>
+      <td>187</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7/4/2016</td>
+      <td>Beach</td>
+      <td>134</td>
+      <td>99</td>
+      <td>76</td>
+      <td>98.0</td>
+      <td>233</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7/5/2016</td>
+      <td>Beach</td>
+      <td>159</td>
+      <td>118</td>
+      <td>78</td>
+      <td>135.0</td>
+      <td>277</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<ul>
+<li>칼럼 추가</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lemonade[<span class="string">&#x27;Test&#x27;</span>] = lemonade[<span class="string">&#x27;Price&#x27;</span>] + lemonade[<span class="string">&#x27;Leaflets&#x27;</span>]</span><br><span class="line">lemonade.head(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Lemon</th>
+      <th>Orange</th>
+      <th>Temperature</th>
+      <th>Leaflets</th>
+      <th>Price</th>
+      <th>Test</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7/1/2016</td>
+      <td>Park</td>
+      <td>97</td>
+      <td>67</td>
+      <td>70</td>
+      <td>90.0</td>
+      <td>164</td>
+      <td>254.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7/2/2016</td>
+      <td>Park</td>
+      <td>98</td>
+      <td>67</td>
+      <td>72</td>
+      <td>90.0</td>
+      <td>165</td>
+      <td>255.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7/3/2016</td>
+      <td>Park</td>
+      <td>110</td>
+      <td>77</td>
+      <td>71</td>
+      <td>104.0</td>
+      <td>187</td>
+      <td>291.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7/4/2016</td>
+      <td>Beach</td>
+      <td>134</td>
+      <td>99</td>
+      <td>76</td>
+      <td>98.0</td>
+      <td>233</td>
+      <td>331.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7/5/2016</td>
+      <td>Beach</td>
+      <td>159</td>
+      <td>118</td>
+      <td>78</td>
+      <td>135.0</td>
+      <td>277</td>
+      <td>412.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<ul>
+<li>칼럼 안보이게 출력</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lemonade_column_drop = lemonade.drop(<span class="string">&#x27;Test&#x27;</span>,axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment">#print(lemonade_column_drop.head(3))</span></span><br><span class="line">lemonade.head(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th &#123;
+    vertical-align: top;
+&#125;
+
+.dataframe thead th &#123;
+    text-align: right;
+&#125;
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Lemon</th>
+      <th>Orange</th>
+      <th>Temperature</th>
+      <th>Leaflets</th>
+      <th>Price</th>
+      <th>Test</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7/1/2016</td>
+      <td>Park</td>
+      <td>97</td>
+      <td>67</td>
+      <td>70</td>
+      <td>90.0</td>
+      <td>164</td>
+      <td>254.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7/2/2016</td>
+      <td>Park</td>
+      <td>98</td>
+      <td>67</td>
+      <td>72</td>
+      <td>90.0</td>
+      <td>165</td>
+      <td>255.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7/3/2016</td>
+      <td>Park</td>
+      <td>110</td>
+      <td>77</td>
+      <td>71</td>
+      <td>104.0</td>
+      <td>187</td>
+      <td>291.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<ul>
+<li>칼럼크기 조절</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pd.set_option(<span class="string">&#x27;display.max_columns&#x27;</span>, <span class="number">8</span>)</span><br><span class="line"><span class="built_in">print</span>(lemonade.head(<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>       Date Location  Lemon  Orange  Temperature  Leaflets  Price   Test
+0  7/1/2016     Park     97      67           70      90.0    164  254.0
+1  7/2/2016     Park     98      67           72      90.0    165  255.0
+2  7/3/2016     Park    110      77           71     104.0    187  291.0
+3  7/4/2016    Beach    134      99           76      98.0    233  331.0
+4  7/5/2016    Beach    159     118           78     135.0    277  412.0
+</code></pre>
+<ul>
+<li>행 조절</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(lemonade[<span class="number">0</span>:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<pre><code>       Date Location  Lemon  Orange  Temperature  Leaflets  Price   Test
+0  7/1/2016     Park     97      67           70      90.0    164  254.0
+1  7/2/2016     Park     98      67           72      90.0    165  255.0
+2  7/3/2016     Park    110      77           71     104.0    187  291.0
+3  7/4/2016    Beach    134      99           76      98.0    233  331.0
+4  7/5/2016    Beach    159     118           78     135.0    277  412.0
+</code></pre>
+<ul>
+<li>조건</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(lemonade[lemonade[<span class="string">&#x27;Location&#x27;</span>] == <span class="string">&#x27;Beach&#x27;</span>].head(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<pre><code>       Date Location  Lemon  Orange  Temperature  Leaflets  Price   Test
+3  7/4/2016    Beach    134      99           76      98.0    233  331.0
+4  7/5/2016    Beach    159     118           78     135.0    277  412.0
+5  7/6/2016    Beach    103      69           82      90.0    172  262.0
+</code></pre>
+<p>#파이썬 시각화 블로그 연습</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">dates = [</span><br><span class="line">    <span class="string">&#x27;2021-01-01&#x27;</span>, <span class="string">&#x27;2021-01-02&#x27;</span>, <span class="string">&#x27;2021-01-03&#x27;</span>, <span class="string">&#x27;2021-01-04&#x27;</span>, <span class="string">&#x27;2021-01-05&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;2021-01-06&#x27;</span>, <span class="string">&#x27;2021-01-07&#x27;</span>, <span class="string">&#x27;2021-01-08&#x27;</span>, <span class="string">&#x27;2021-01-09&#x27;</span>, <span class="string">&#x27;2021-01-10&#x27;</span></span><br><span class="line">]</span><br><span class="line">min_temperature = [<span class="number">20.7</span>, <span class="number">17.9</span>, <span class="number">18.8</span>, <span class="number">14.6</span>, <span class="number">15.8</span>, <span class="number">15.8</span>, <span class="number">15.8</span>, <span class="number">17.4</span>, <span class="number">21.8</span>, <span class="number">20.0</span>]</span><br><span class="line">max_temperature = [<span class="number">34.7</span>, <span class="number">28.9</span>, <span class="number">31.8</span>, <span class="number">25.6</span>, <span class="number">28.8</span>, <span class="number">21.8</span>, <span class="number">22.8</span>, <span class="number">28.4</span>, <span class="number">30.8</span>, <span class="number">32.0</span>]</span><br><span class="line"><span class="comment">#fig = 도화지 axes = 그래프 pl = pyplot</span></span><br><span class="line">fig,axes = plt.subplots(nrows=<span class="number">1</span>, ncols=<span class="number">1</span>, figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line">axes.plot(dates, min_temperature, label = <span class="string">&#x27;Min Temperature&#x27;</span>)</span><br><span class="line">axes.plot(dates, max_temperature, label = <span class="string">&#x27;Max Temperature&#x27;</span>)</span><br><span class="line">axes.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_34_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line">month_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>]</span><br><span class="line">sold_list = [<span class="number">300</span>, <span class="number">400</span>, <span class="number">550</span>, <span class="number">900</span>, <span class="number">600</span>, <span class="number">960</span>, <span class="number">900</span>, <span class="number">910</span>, <span class="number">800</span>, <span class="number">700</span>, <span class="number">550</span>, <span class="number">450</span>]</span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line">plot = ax.bar(month_list, sold_list)</span><br><span class="line"><span class="comment">#plt.xticks(month_list, calendar.month_name[1:13], rotation=90)</span></span><br><span class="line">ax.set_xticks(month_list)<span class="comment">#x축 </span></span><br><span class="line">ax.set_xticklabels(calendar.month_name[<span class="number">1</span>:<span class="number">13</span>], rotation=<span class="number">90</span>) <span class="comment">#x 축 라벨 지정</span></span><br><span class="line"><span class="keyword">for</span> rect <span class="keyword">in</span> plot:</span><br><span class="line">    <span class="built_in">print</span>(rect)</span><br><span class="line">    height = rect.get_height()</span><br><span class="line">    ax.text(rect.get_x() + rect.get_width()/<span class="number">2.</span>, <span class="number">1.002</span>*height,<span class="string">&#x27;%d&#x27;</span> % </span><br><span class="line">    <span class="built_in">int</span>(height), ha=<span class="string">&#x27;center&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>Rectangle(xy=(0.6, 0), width=0.8, height=300, angle=0)
+Rectangle(xy=(1.6, 0), width=0.8, height=400, angle=0)
+Rectangle(xy=(2.6, 0), width=0.8, height=550, angle=0)
+Rectangle(xy=(3.6, 0), width=0.8, height=900, angle=0)
+Rectangle(xy=(4.6, 0), width=0.8, height=600, angle=0)
+Rectangle(xy=(5.6, 0), width=0.8, height=960, angle=0)
+Rectangle(xy=(6.6, 0), width=0.8, height=900, angle=0)
+Rectangle(xy=(7.6, 0), width=0.8, height=910, angle=0)
+Rectangle(xy=(8.6, 0), width=0.8, height=800, angle=0)
+Rectangle(xy=(9.6, 0), width=0.8, height=700, angle=0)
+Rectangle(xy=(10.6, 0), width=0.8, height=550, angle=0)
+Rectangle(xy=(11.6, 0), width=0.8, height=450, angle=0)
+</code></pre>
+<p><img src="output_35_1.png" alt="png"></p>
+<p>#페가블로그 코드</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> (MultipleLocator, AutoMinorLocator, FuncFormatter)</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_example</span>(<span class="params">ax, zorder=<span class="number">0</span></span>):</span></span><br><span class="line">    ax.bar(tips_day[<span class="string">&quot;day&quot;</span>], tips_day[<span class="string">&quot;tip&quot;</span>], color=<span class="string">&quot;lightgray&quot;</span>, zorder=zorder)</span><br><span class="line">    ax.set_title(<span class="string">&quot;tip (mean)&quot;</span>, fontsize=<span class="number">16</span>, pad=<span class="number">12</span>)</span><br><span class="line">    <span class="comment"># Values</span></span><br><span class="line">    h_pad = <span class="number">0.1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        fontweight = <span class="string">&quot;normal&quot;</span></span><br><span class="line">        color = <span class="string">&quot;k&quot;</span></span><br><span class="line">        <span class="keyword">if</span> i == <span class="number">3</span>:</span><br><span class="line">            fontweight = <span class="string">&quot;bold&quot;</span></span><br><span class="line">            color = <span class="string">&quot;darkred&quot;</span></span><br><span class="line"></span><br><span class="line">        ax.text(i, tips_day[<span class="string">&quot;tip&quot;</span>].loc[i] + h_pad, <span class="string">f&quot;<span class="subst">&#123;tips_day[<span class="string">&#x27;tip&#x27;</span>].loc[i]:<span class="number">0.2</span>f&#125;</span>&quot;</span>, </span><br><span class="line">                horizontalalignment=<span class="string">&#x27;center&#x27;</span>, fontsize=<span class="number">12</span>, fontweight=fontweight, color=color)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Sunday</span></span><br><span class="line">    ax.patches[<span class="number">3</span>].set_facecolor(<span class="string">&quot;darkred&quot;</span>)</span><br><span class="line">    ax.patches[<span class="number">3</span>].set_edgecolor(<span class="string">&quot;black&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set_range</span></span><br><span class="line">    ax.set_ylim(<span class="number">0</span>, <span class="number">4</span>)</span><br><span class="line">    <span class="keyword">return</span> ax</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">major_formatter</span>(<span class="params">x, pos</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&#123;%.2f&#125;&quot;</span> % x</span><br><span class="line">formatter = FuncFormatter(major_formatter)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tips = sns.load_dataset(<span class="string">&quot;tips&quot;</span>)</span><br><span class="line">tips_day = tips.groupby(<span class="string">&quot;day&quot;</span>).mean().reset_index()</span><br><span class="line"><span class="built_in">print</span>(tips_day)</span><br></pre></td></tr></table></figure>
+
+<pre><code>    day  total_bill       tip      size
+0  Thur   17.682742  2.771452  2.451613
+1   Fri   17.151579  2.734737  2.105263
+2   Sat   20.441379  2.993103  2.517241
+3   Sun   21.410000  3.255132  2.842105
+</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">6</span>))</span><br><span class="line">ax = plot_example(ax, zorder=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_40_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">6</span>))</span><br><span class="line">ax = plot_example(ax, zorder=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">ax.spines[<span class="string">&quot;top&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;right&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;left&quot;</span>].set_visible(<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_41_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax = plot_example(ax, zorder=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">ax.spines[<span class="string">&quot;top&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;right&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;left&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">ax.yaxis.set_major_locator(MultipleLocator(<span class="number">1</span>))</span><br><span class="line">ax.yaxis.set_major_formatter(formatter)</span><br><span class="line">ax.yaxis.set_minor_locator(MultipleLocator(<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_42_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax = plot_example(ax, zorder=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">ax.spines[<span class="string">&quot;top&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;right&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax.spines[<span class="string">&quot;left&quot;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">ax.yaxis.set_major_locator(MultipleLocator(<span class="number">1</span>))</span><br><span class="line">ax.yaxis.set_major_formatter(formatter)</span><br><span class="line">ax.yaxis.set_minor_locator(MultipleLocator(<span class="number">0.5</span>))</span><br><span class="line">    </span><br><span class="line">ax.grid(axis=<span class="string">&quot;y&quot;</span>, which=<span class="string">&quot;major&quot;</span>, color=<span class="string">&quot;lightgray&quot;</span>)</span><br><span class="line">ax.grid(axis=<span class="string">&quot;y&quot;</span>, which=<span class="string">&quot;minor&quot;</span>, ls=<span class="string">&quot;:&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_43_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">tips = sns.load_dataset(<span class="string">&quot;tips&quot;</span>)</span><br><span class="line">fig, ax = plt.subplots(nrows = <span class="number">1</span>, ncols = <span class="number">2</span>, figsize=(<span class="number">16</span>, <span class="number">5</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ideal Bar Graph</span></span><br><span class="line">ax0 = sns.barplot(x = <span class="string">&quot;day&quot;</span>, y = <span class="string">&#x27;total_bill&#x27;</span>, data = tips, </span><br><span class="line">                  ci=<span class="literal">None</span>, color=<span class="string">&#x27;lightgray&#x27;</span>, alpha=<span class="number">0.85</span>, zorder=<span class="number">2</span>, </span><br><span class="line">                  ax=ax[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">group_mean = tips.groupby([<span class="string">&#x27;day&#x27;</span>])[<span class="string">&#x27;total_bill&#x27;</span>].agg(<span class="string">&#x27;mean&#x27;</span>)</span><br><span class="line">h_day = group_mean.sort_values(ascending=<span class="literal">False</span>).index[<span class="number">0</span>]</span><br><span class="line">h_mean = np.<span class="built_in">round</span>(group_mean.sort_values(ascending=<span class="literal">False</span>)[<span class="number">0</span>], <span class="number">2</span>)</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> ax0.patches:</span><br><span class="line">  fontweight = <span class="string">&quot;normal&quot;</span></span><br><span class="line">  color = <span class="string">&quot;k&quot;</span></span><br><span class="line">  height = np.<span class="built_in">round</span>(p.get_height(), <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">if</span> h_mean == height:</span><br><span class="line">    fontweight=<span class="string">&quot;bold&quot;</span></span><br><span class="line">    color=<span class="string">&quot;darkred&quot;</span></span><br><span class="line">    p.set_facecolor(color)</span><br><span class="line">    p.set_edgecolor(<span class="string">&quot;black&quot;</span>)</span><br><span class="line">  ax0.text(p.get_x() + p.get_width()/<span class="number">2.</span>, height+<span class="number">1</span>, height, ha = <span class="string">&#x27;center&#x27;</span>, size=<span class="number">12</span>, fontweight=fontweight, color=color)</span><br><span class="line"></span><br><span class="line">ax0.set_ylim(-<span class="number">3</span>, <span class="number">30</span>)</span><br><span class="line">ax0.set_title(<span class="string">&quot;Ideal Bar Graph&quot;</span>, size = <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">ax0.spines[<span class="string">&#x27;top&#x27;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax0.spines[<span class="string">&#x27;left&#x27;</span>].set_position((<span class="string">&quot;outward&quot;</span>, <span class="number">20</span>))</span><br><span class="line">ax0.spines[<span class="string">&#x27;left&#x27;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line">ax0.spines[<span class="string">&#x27;right&#x27;</span>].set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">ax0.set_xlabel(<span class="string">&quot;Weekday&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line"><span class="keyword">for</span> xtick <span class="keyword">in</span> ax0.get_xticklabels():</span><br><span class="line">  <span class="keyword">if</span> xtick.get_text() == h_day:</span><br><span class="line">    xtick.set_color(<span class="string">&quot;darkred&quot;</span>)</span><br><span class="line">    xtick.set_fontweight(<span class="string">&quot;demibold&quot;</span>)</span><br><span class="line">ax0.set_xticklabels([<span class="string">&#x27;Thursday&#x27;</span>, <span class="string">&#x27;Friday&#x27;</span>, <span class="string">&#x27;Saturday&#x27;</span>, <span class="string">&#x27;Sunday&#x27;</span>], size=<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line">ax0.set_ylabel(<span class="string">&quot;Avg. Total Bill($)&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line"></span><br><span class="line">ax0.grid(axis=<span class="string">&quot;y&quot;</span>, which=<span class="string">&quot;major&quot;</span>, color=<span class="string">&quot;lightgray&quot;</span>)</span><br><span class="line">ax0.grid(axis=<span class="string">&quot;y&quot;</span>, which=<span class="string">&quot;minor&quot;</span>, ls=<span class="string">&quot;:&quot;</span>)</span><br><span class="line"></span><br><span class="line">ax1 = sns.barplot(x = <span class="string">&quot;day&quot;</span>, y = <span class="string">&#x27;total_bill&#x27;</span>, data = tips, </span><br><span class="line">                  ci=<span class="literal">None</span>, alpha=<span class="number">0.85</span>, </span><br><span class="line">                  ax=ax[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> ax1.patches:</span><br><span class="line">  height = np.<span class="built_in">round</span>(p.get_height(), <span class="number">2</span>)</span><br><span class="line">  ax1.text(p.get_x() + p.get_width()/<span class="number">2.</span>, height+<span class="number">1</span>, height, ha = <span class="string">&#x27;center&#x27;</span>, size=<span class="number">12</span>)</span><br><span class="line">ax1.set_ylim(-<span class="number">3</span>, <span class="number">30</span>)</span><br><span class="line">ax1.set_title(<span class="string">&quot;Just Bar Graph&quot;</span>)</span><br><span class="line"></span><br><span class="line">fig.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="output_44_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-04-06T07:58:40.406Z" title="2021. 4. 6. 오후 4:58:40">2021-04-06</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-04-06T07:55:21.490Z" title="2021. 4. 6. 오후 4:55:21">2021-04-06</time></span><span class="level-item">16 minutes read (About 2380 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/06/Logistic-regression2/"> </a></h1><div class="content"><!DOCTYPE html>
 
 <html>
 
@@ -1136,82 +1803,7 @@ $(document).ready(function () {
 <h2 id="Including-Plots"><a href="#Including-Plots" class="headerlink" title="Including Plots"></a>Including Plots</h2><p>You can also embed plots, for example:</p>
 <p><img src="temp_files/figure-html/pressure-1.png"><!-- --></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-03-22T05:20:53.000Z" title="2021. 3. 22. 오후 2:20:53">2021-03-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-03-23T02:11:16.173Z" title="2021. 3. 23. 오전 11:11:16">2021-03-23</time></span><span class="level-item">3 minutes read (About 388 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/03/22/Rbasic/">Rbasic</a></h1><div class="content"><p>Data에는 질적 범주, 양적 범주가 있다</p>
-<p>질적 범주 안에는 명목척도와 서열척도가 있음</p>
-<p>※ 명목척도(Nominal Scale): </p>
-<p>ㅁ 가장 낮은 수준의 척도로 단지 측정대상의 특성만 구분하기 위하여 숫자나 기호를 할당한 것으로 특성간의 양적인 분석을 할 수 없고, 때문에 특성간에 대소의 비료도 할 수 없다.</p>
-<p>※ 서열척도(Ordinal Scale): </p>
-<p>ㅁ 측정대상의 특성들을 구분하여 줄뿐만 아니라 이들 사이의 상대적인 크기를 나타낼 수 있고, 서로 간에 비교가 가능한 척도</p>
-<ul>
-<li><p>명목척도</p>
-<ul>
-<li>닭고기 </li>
-<li>소고기</li>
-</ul>
-</li>
-<li><p>서열척도</p>
-<ul>
-<li> 닭고기 1등급</li>
-<li> 닭고기 2등급</li>
-</ul>
-</li>
-<li><p>연속형</p>
-<ul>
-<li>discrete </li>
-</ul>
-</li>
-</ul>
-<hr>
-<p><img src="https://user-images.githubusercontent.com/80385376/111945003-35a0ae00-8b1c-11eb-9493-92ac6c357614.png" alt="1"></p>
-<hr>
-<ol>
-<li>사람과 관련된 데이터  </li>
-</ol>
-<ul>
-<li><p>고객 데이터 (crm)</p>
-</li>
-<li><p>아무리 분석을 해도 마케팅이 없으면 x</p>
-</li>
-</ul>
-<p>　</p>
-<ol start="2">
-<li>기계와 관련된 데이터 (무의미한 데이터가 많음)</li>
-</ol>
-<ul>
-<li>제조공정과 관련된 데이터</li>
-</ul>
-<hr>
-<p> ※ 0단계 : 패키지 설치</p>
-<ul>
-<li>install.packages(“ggplot2”)</li>
-</ul>
-<p> ※ 1단계 : 패키지 불러오기</p>
-<ul>
-<li>library(ggplot2)</li>
-</ul>
-<p> ※ 2단계 : Data 불러오기</p>
-<ul>
-<li>data(“iris”)</li>
-</ul>
-<p> ※ 3 데이터확인</p>
-<ul>
-<li>str(iris)</li>
-</ul>
-<p> ※ 4 가공되지 않은 데이터 가공하기 ( 시각화를 위해서)</p>
-<p> ※ 5 시각화 하기</p>
-<ul>
-<li><p>ggplot(data=iris, mapping = aes(x = Petal.Length,y = Species)) + geom_point()</p>
-</li>
-<li><p>ggplot(데이터, x축, y축) +<br>그래프종류 + 옵션(예: 축의 범위, 그래프 제목, 그래프 색상, 그래프의 배경색)</p>
-</li>
-</ul>
-<hr>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-03-22T02:24:30.000Z" title="2021. 3. 22. 오전 11:24:30">2021-03-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-06-08T00:53:14.201Z" title="2021. 6. 8. 오전 9:53:14">2021-06-08</time></span><span class="level-item">a few seconds read (About 28 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/03/22/20210608/">c++</a></h1><div class="content"><p>vim 또는 다른 편집기로 test.md 열기</p>
-<p>test.md 파일에 다음 코드를 추가합니다.</p>
-<object data="C:\Users\w\Desktop\sj\Myblog\Myblog\source\_posts\preg1.pdf" type="application/pdf" width="100%" height="877px">
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2021-03-22T02:24:30.000Z" title="2021. 3. 22. 오전 11:24:30">2021-03-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2021-03-22T02:29:17.248Z" title="2021. 3. 22. 오전 11:29:17">2021-03-22</time></span><span class="level-item">a few seconds read (About 9 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/03/22/c/">c++</a></h1><div class="content"><p>#include<iostream><br>using namespace std;</p>
-<p>int main()<br>{<br>    std &gt;&gt; “hello world”;<br>}</p>
-</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/">Previous</a></div><div class="pagination-next"><a href="/page/3/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><a class="pagination-link is-current" href="/page/2/">2</a></li><li><a class="pagination-link" href="/page/3/">3</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="조심재"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">조심재</p><p class="is-size-6 is-block">심재 블로그</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>대한민국</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">22</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-06-08T00:55:42.000Z">2021-06-08</time></p><p class="title"><a href="/2021/06/08/test/">test</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-28T05:36:37.745Z">2021-05-28</time></p><p class="title"><a href="/2021/05/28/20210528/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-03T01:35:43.812Z">2021-05-03</time></p><p class="title"><a href="/2021/05/03/20210503/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-27T05:39:55.591Z">2021-04-27</time></p><p class="title"><a href="/2021/04/27/20210427/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-14T07:44:14.797Z">2021-04-14</time></p><p class="title"><a href="/2021/04/14/20210414/"> </a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/06/"><span class="level-start"><span class="level-item">June 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">May 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">April 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">March 2021</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/R/"><span class="tag">R</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/c/"><span class="tag">c++</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ppt/"><span class="tag">ppt</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2021 Sim Jae</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/">Previous</a></div><div class="pagination-next"><a href="/page/3/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><a class="pagination-link is-current" href="/page/2/">2</a></li><li><a class="pagination-link" href="/page/3/">3</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="조심재"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">조심재</p><p class="is-size-6 is-block">심재 블로그</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>대한민국</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">4</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/ppoffice"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-06-08T02:57:48.657Z">2021-06-08</time></p><p class="title"><a href="/2021/06/08/20210608_3/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-06-08T02:49:11.766Z">2021-06-08</time></p><p class="title"><a href="/2021/06/08/20210608_2/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-06-08T02:09:55.212Z">2021-06-08</time></p><p class="title"><a href="/2021/06/08/20210608_1/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-06-08T02:06:41.362Z">2021-06-08</time></p><p class="title"><a href="/2021/06/08/20210608/"> </a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-05-28T05:36:37.745Z">2021-05-28</time></p><p class="title"><a href="/2021/05/28/20210528/"> </a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/06/"><span class="level-start"><span class="level-item">June 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/05/"><span class="level-start"><span class="level-item">May 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">April 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/03/"><span class="level-start"><span class="level-item">March 2021</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/R/"><span class="tag">R</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/c/"><span class="tag">c++</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/python/"><span class="tag">python</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Simjae&#039;s blog" height="28"></a><p class="is-size-7"><span>&copy; 2021 Sim Jae</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,
